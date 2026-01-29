@@ -1,0 +1,40 @@
+Host *
+  SetEnv TERM=xterm-256color
+
+# Not needed as we never connect to the internal network.
+#Match host *.dragons-rage.net !exec "ifconfig <nw adapter> | grep <local nw ip pattern>"
+#    ProxyJump dstritzel@
+
+
+Host bastion bastion.dragons-rage.com
+  User dstritzel
+  Hostname node-alpha.dragons-rage.com
+  ForwardAgent yes
+  ControlPath ~/.ssh/control/master-%r@%h:%p
+  ControlPersist 30m
+  ControlMaster auto
+
+
+Host dmm-cf
+  ProxyCommand /usr/local/bin/cloudflared access ssh --hostname dmm.dragons-rage.net
+  User derekstritzel
+  # ProxyJump bastion.dragons-rage.com
+  Hostname dmm.dragons-rage.net
+  ServerAliveInterval 60
+  ServerAliveCountMax 3
+
+Host megamind dmm dmbp
+  User derekstritzel
+  Hostname %h.dragons-rage.net
+  ProxyJump bastion.dragons-rage.com
+  ServerAliveInterval 60
+  ServerAliveCountMax 3
+  ForwardAgent yes
+
+Host amd-node? pi-node? thinker
+  User dstritzel
+  ProxyJump bastion.dragons-rage.com
+  ServerAliveInterval 60
+  ServerAliveCountMax 3
+  Hostname %h.dragons-rage.net
+  ForwardAgent yes
