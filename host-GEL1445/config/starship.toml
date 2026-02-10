@@ -1,0 +1,15 @@
+[kubernetes]
+disabled = false
+detect_files = [".k8s"]
+# Doesn't detect CWD only folders in the directory you are in.
+#detect_folders = ['k8s', 'gitlab-k8s-manifest', 'bitbucket-k8s-manifest']
+
+[aws]
+disabled = true
+
+[hostname]
+ssh_only = false
+disabled = false
+
+[gcloud]
+disabled = true

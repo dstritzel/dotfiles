@@ -1,11 +1,24 @@
 #!/usr/bin/env bash
 
+if [ -z "$USER" ]; then
+  USER=$(id -un)
+fi
+
+if [ -f "$HOME/.rcrc" ]; then
+  echo "Exiting, .rcrc file already exists"
+  echo "Edit ~/.rcrc file and run rcup manually to update your dotfiles"
+  echo " *** This fuctionality may change in the future ***"
+  exit 1
+fi
+
 # Config Section
 COPY_OVERWRITE="true"
-COPY_ALWAYS="ssh/*"
+COPY_ALWAYS="ssh/* config/*"
 EXCLUDES="install.sh README.md includes/*"
-TAGS="$1"
+TAGS="$USER $1"
 CODESPACE_NAME="false"
+SYMLINK_DIRS=""
+UNDOTTED_DIRS=""
 
 if [ -n "$WSL_DISTRO_NAME" ]; then
   echo "Running in WSL: $WSL_DISTRO_NAME"
@@ -28,10 +41,6 @@ elif [ "$(uname)" = "FreeBSD" ]; then
   echo "Running on FreeBSD"
   TAGS="$TAGS freebsd"
   . includes/freebsd_functions.sh
-fi
-
-if [ -z "$USER" ]; then
-  USER=$(id -un)
 fi
 
 if [ -n "$CODESPACE_NAME" ] || [ -n "$GITHUB_CODESPACE_NAME" ]; then
@@ -64,6 +73,14 @@ elif [ "$OS_TYPE" = "mac" ]; then
   install_brew
   brew install rcm fzf
 fi
+
+echo Writing rcrc file...
+echo "COPY_OVERWRITE=$COPY_OVERWRITE">$HOME/.rcrc
+echo "COPY_ALWAYS=$COPY_ALWAYS">>$HOME/.rcrc
+echo "EXCLUDES=$EXCLUDES">>$HOME/.rcrc
+echo "TAGS=$TAGS">>$HOME/.rcrc
+echo "SYMLINK_DIRS=$SYMLINK_DIRS">>$HOME/.rcrc
+echo "UNDOTTED_DIRS=$UNDOTTED_DIRS">>$HOME/.rcrc
 
 if [ "$COPY_OVERWRITE" = "true" ]; then
   yes | rcup -Cf
