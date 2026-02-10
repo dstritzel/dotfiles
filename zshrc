@@ -121,3 +121,6 @@ function urldecode() {
     echo -e "${_//%/\\x}" # Convert %XX to their ASCII equivalent
 }
 
+# Antidote for plugin management
+source ~/.antidote/antidote.zsh
+antidote load

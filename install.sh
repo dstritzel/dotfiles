@@ -74,6 +74,13 @@ elif [ "$OS_TYPE" = "mac" ]; then
   brew install rcm fzf
 fi
 
+if [[ ! -f "$HOME/.antidote" ]]; then
+  echo "Installing Antidote"
+  git clone https://github.com/mattmc3/antidote.git ~/.antidote
+  echo "source ~/.antidote/antidote.zsh" >> ~/.zshrc
+  echo "antidote load" >> ~/.zshrc
+fi
+
 echo Writing rcrc file...
 echo "COPY_OVERWRITE=$COPY_OVERWRITE">$HOME/.rcrc
 echo "COPY_ALWAYS=$COPY_ALWAYS">>$HOME/.rcrc
