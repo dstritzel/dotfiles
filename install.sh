@@ -54,7 +54,8 @@ cd "$HOME" || return
 export SUDO_ASKPASS=/bin/true
 
 # Install zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+# Remove so we can use antidote
+#sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 sudo chsh "$(id -un)" --shell "/usr/bin/zsh"
 
@@ -63,6 +64,7 @@ if [ "$OS_TYPE" = "ubuntu" ]; then
   sudo apt-get install -y rcm fzf
   sudo apt-get install -y silversearcher-ag
 elif [ "$OS_TYPE" = "fedora" ]; then
+  # Don't use and am not testing fedora
   sudo dnf update
   sudo dnf install -y rcm fzf
 elif [ "$OS_TYPE" = "freebsd" ]; then
