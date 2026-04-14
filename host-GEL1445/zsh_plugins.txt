@@ -18,9 +18,7 @@ ohmyzsh/ohmyzsh path:plugins/kubectx
 ohmyzsh/ohmyzsh path:plugins/nvm
 ohmyzsh/ohmyzsh path:plugins/podman
 ohmyzsh/ohmyzsh path:plugins/pyenv
-ohmyzsh/ohmyzsh path:plugins/starship
 ohmyzsh/ohmyzsh path:plugins/thefuck
 ohmyzsh/ohmyzsh path:plugins/uv
-ohmyzsh/ohmyzsh path:plugins/virtualenv
 # Prompt
 romkatv/powerlevel10k
